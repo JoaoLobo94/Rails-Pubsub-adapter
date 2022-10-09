@@ -33,6 +33,10 @@ When all services are started you should have 3 containers.
 $ CalculationJob.perform_later(1, 2)
 ```
 - A job is now published to pubsub. We are using the topic name, as the queue name.
+- You can run the job in a different queue by setting the queue parameter
+```
+$ CalculationJob.set(queue: 'example').perform_later(1, 2)
+```
 - For simplicity, the subscriber defaults to 'default'. A possible improvement would be to set a custom serializer where it sets an active job parameter as "subscriber", or send it as part of a perform_later argument
 - The messages are ordered. You can set the priority of the message by:
 ```
