@@ -37,20 +37,6 @@ module ActiveJob
           @pubsub.publish_message(topic_name: queue_name, message: job.to_json, ordering_key: ordering_key || 1)
         end
       end
-
-      # Executor class is responsible for deserializing jobs and performing them
-      # @param [String] subscription_name The name of the subscription to listen to
-      class Executor
-        def initialize(message)
-          @parsed_message = JSON.parse(message)["job_data"]
-        end
-
-        # Perform the job.
-        # @return [Object] The result of the job
-        def perform
-          Base.execute(@parsed_message)
-        end
-      end
     end
   end
 end

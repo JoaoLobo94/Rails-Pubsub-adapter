@@ -39,4 +39,38 @@ class Pubsub
     topic.enable_message_ordering!
     topic.publish_async(message, ordering_key: ordering_key)
   end
+
+
+  # Listen for messages on a subscription.
+  # @param subscription_name [String] The name of the subscription to listen to
+  # @return [Google::Cloud::PubSub::ReceivedMessage]
+  def receive_and_perform_jobs(topic_name: @topic_name, subscription_name: @subscription_name)
+    subscription = find_or_create_subscription(topic_name: topic_name, subscription_name: subscription_name)
+    subscription.message_ordering?
+    subscriber = subscription.listen do |received_message|
+      print_job_result(received_message)
+    end
+    print_exceptions(subscriber)
+    at_exit do
+      subscriber.stop!(10)
+    end
+    subscriber.start
+  end
+
+  private
+
+  # Print exceptions raised by the subscriber thread.
+  # @param subscriber [Google::Cloud::PubSub::Subscriber]
+  def print_exceptions(subscriber)
+    subscriber.on_error do |exception|
+      puts("Exception: #{exception.class} #{exception.message}")
+    end
+  end
+  # Print the result of a job.
+  # @param received_message [Google::Cloud::PubSub::ReceivedMessage]
+
+  def print_job_result(message)
+    puts("Your calculation result is #{ActiveJob::QueueAdapters::PubsubAdapter::Executor.new(message.data).perform}")
+    message.acknowledge!
+  end
 end
