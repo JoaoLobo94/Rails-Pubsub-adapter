@@ -10,14 +10,13 @@ class Pubsub
     @client = Google::Cloud::PubSub.new(project_id: "code-challenge")
   end
 
-    # Find or create a topic.
+  # Find or create a topic.
   #
   # @param topic [String] The name of the topic to find or create
   # @return [Google::Cloud::PubSub::Topic]
   def find_or_create_topic(topic_name: @topic_name)
     @client.topic(topic_name) || @client.create_topic(topic_name)
   end
-
 
   # Find or create a subscription.
   #
@@ -39,7 +38,6 @@ class Pubsub
     topic.enable_message_ordering!
     topic.publish_async(message, ordering_key: ordering_key)
   end
-
 
   # Listen for messages on a subscription.
   # @param subscription_name [String] The name of the subscription to listen to
@@ -64,6 +62,8 @@ class Pubsub
   def print_exceptions(subscriber)
     subscriber.on_error do |exception|
       puts("Exception: #{exception.class} #{exception.message}")
+      # acknowledge the message so it won't be redelivered
+      exception.received_message.acknowledge!
     end
   end
   # Print the result of a job.
