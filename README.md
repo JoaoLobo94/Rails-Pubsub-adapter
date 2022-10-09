@@ -48,5 +48,5 @@ $ CalculationJob.set(priority: 1).perform_later(1, 2)
 - You can also set arguments to the worker, to listen to different topics in case you set a custom topic besides the default one
 
 ```
-$ docker compose run --rm web bin/rake worker:run [topic
+$ docker compose run --rm web bin/rake worker:run [topic]
 ```
