@@ -8,7 +8,8 @@ namespace(:worker) do
     puts("Worker starting... Listening for messages)")
     # check if there are any arguments passed to the task, otherwise take default values
     if ARGV.count > 1
-      Pubsub.new.receive_and_perform_jobs(topic_name: ARGV[1], subscription_name: ARGV[2])
+      # for simplicity subscription name is set to default
+      Pubsub.new.receive_and_perform_jobs(topic_name: ARGV[1])
     else
       Pubsub.new.receive_and_perform_jobs
     end
