@@ -39,7 +39,7 @@ class Pubsub
     subscription = find_or_create_subscription(topic_name: topic_name, subscription_name: subscription_name)
     subscription.message_ordering?
     subscriber = subscription.listen do |received_message|
-      execute_and_acknowledge_job(received_message)
+      execute_and_acknowledge_message(received_message)
     end
     at_exit do
       # print exceptions raised by the subscriber thread on exit
@@ -61,7 +61,7 @@ class Pubsub
   # Print the result of a job.
   # @param received_message [Google::Cloud::PubSub::ReceivedMessage]
 
-  def execute_and_acknowledge_job(message)
+  def execute_and_acknowledge_message(message)
     puts("Your calculation result is #{ActiveJob::QueueAdapters::PubsubAdapter::Executor.new(message.data).perform}")
     message.acknowledge!
   end
