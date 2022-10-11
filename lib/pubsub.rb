@@ -66,7 +66,7 @@ class Pubsub
     message.acknowledge!
   end
 
-    # Create a new client.
+  # Create a new client.
   #
   # @return [Google::Cloud::PubSub]
   def client
