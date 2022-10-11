@@ -31,10 +31,8 @@ module ActiveJob
         end
 
         # Enqueue a job to be performed.
-        # subscription name not included, and set to default, for simplicity
         def enqueue(job, queue_name:, ordering_key:)
-          @pubsub.find_or_create_subscription(topic_name: queue_name)
-          @pubsub.publish_message(topic_name: queue_name, message: job.to_json, ordering_key: ordering_key || 1)
+          @pubsub.publish_message(topic_name: queue_name, message: job.to_json, ordering_key: ordering_key || "1")
         end
       end
 
