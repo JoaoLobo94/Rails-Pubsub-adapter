@@ -5,7 +5,7 @@ namespace(:worker) do
   task(run: :environment) do
     # See https://googleapis.dev/ruby/google-cloud-pubsub/latest/index.html
 
-    puts("Worker starting... Listening for messages)")
+    puts("Worker starting... Listening for messages")
     # check if there are any arguments passed to the task, otherwise take default values
     if ARGV.count > 1
       # for simplicity subscription name is set to default
