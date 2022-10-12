@@ -6,6 +6,6 @@ class CalculationJob < ApplicationJob
   # @param number1, number2 [Integer] The values you want to calculate
   # @return [Integer]
   def perform(number1, number2)
-    (number1 + number2) * (number1 - number2)
+    puts("Your result is #{(number1 + number2) * (number1 - number2)}")
   end
 end
