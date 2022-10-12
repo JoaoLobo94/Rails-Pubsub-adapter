@@ -11,7 +11,7 @@ class Pubsub
   def publish_message(message:, topic_name:, ordering_key:)
     topic = find_or_create_topic(topic_name: topic_name)
     topic.enable_message_ordering!
-    topic.publish(message, ordering_key: ordering_key)
+    topic.publish_async(message, ordering_key: ordering_key)
   end
 
   # Listen for messages on a subscription.
