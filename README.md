@@ -1,4 +1,4 @@
-# The Kisi Backend Code Challenge
+
 
 This repository contains the solution for the challenge.
 
