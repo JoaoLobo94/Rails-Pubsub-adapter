@@ -10,7 +10,7 @@ namespace(:worker) do
     if ARGV.count == 3
       Pubsub.new.receive_and_perform_jobs(topic_name: ARGV[1], subscription_name: ARGV[2])
     elsif ARGV.count == 2 || ARGV.count > 3
-      puts("Error: Please provide topic name both and subscription name (must be unique)")
+      puts("Error: Please provide both topic nam eand subscription name (must be unique)")
     else
       # assume default values
       Pubsub.new.receive_and_perform_jobs
