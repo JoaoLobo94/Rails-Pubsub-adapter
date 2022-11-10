@@ -1,7 +1,3 @@
-
-
-This repository contains the solution for the challenge.
-
 To start all services, make sure you have [Docker](https://www.docker.com/products/docker-desktop/) installed and run:
 
 ```
